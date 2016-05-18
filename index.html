@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html ng-app="shoppingApp" lang="en">
+  <head>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.6/sandstone/bootstrap.min.css" media="screen" title="no title" charset="utf-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="./style.css" media="screen" title="no title" charset="utf-8">
+    <title>Shop Your Teas</title>
+
+
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <base href="/">
+  </head>
+  <body>
+    <div class="page-header text-center">
+      <h1>PRIORITEAS</h1>
+    </div>
+    <div class="container">
+      <div class="row">
+          <div ng-view></div>
+      </div>
+    </div>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.5/angular.js" charset="utf-8"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.5/angular-route.js" charset="utf-8"></script>
+    <script src="./app.js" charset="utf-8"></script>
+    <script src="./cart/cart-controller.js" charset="utf-8"></script>
+    <script src="./store/store-controller.js" charset="utf-8"></script>
+  </body>
+</html>

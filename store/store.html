@@ -1,0 +1,97 @@
+<div class="col-md-2 col-md-offset-4 text-center">
+  <label for="searchByName">Search by name: </label>
+  <input
+  type="text"
+  id="searchByName"
+  name="searchByName"
+  ng-model="searchByName"
+  placeholder="tea"
+  class="form-control">
+</div>
+<div class="col-md-2 text-center">
+  <label for="searchByCategory text-center">Search by category: </label>
+  <select id="searchByCategory" name="searchByCategory" class="form-control">
+    <option disabled>Categories</option>
+    <option ng-repeat="category in categoriesList">{{store.category}}</option>
+  </select>
+</div>
+<div class="col-md-12">
+  <table class="table table-responsive borderless">
+    <tr>
+      <th>
+        Teas
+      </th>
+      <th>
+        Info
+      </th>
+      <th>
+      </th>
+      <th>
+      </th>
+      <th>
+
+      </th>
+      <th class="pull-right">
+        Subtotal: {{store.subtotal}}
+      </th>
+      <th>
+        <a type="button" class="btn btn-warning" href="/cart"><span class="glyphicon glyphicon-shopping-cart"></span>
+          Cart: {{total || 'total'}}
+        </a>
+      </th>
+    </tr>
+    <tr ng-repeat="item in store.items">
+      <td>
+        <div class="pull-left">
+          <img src="{{item.imageUrl}}" alt="{{item.name}}" />
+        </div>
+      </td>
+      <td>
+        <div class="pull-left clearfix">
+          <ul>
+            <li ng-repeat="(k, v) in item" ng-show="k != 'imageUrl'">
+              <span>{{k}}: </span>
+              <span ng-show="k != 'categories'">{{v}}</span>
+              <ul ng-show="k == 'categories'">
+                <li ng-repeat="category in item.categories">
+                  {{category}}
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </td>
+      <td>
+      </td>
+      <td>
+      </td>
+
+      <!-- ng-if to show a form on store.editQuantity() boolean = true -->
+      <td class="pull-right">
+        <label ng-show="store.quantityOn">Quantity: <br>
+          <input
+          type="number"
+          ng-model="store.quantity"
+          class="form-control"
+          readonly="readonly"></label>
+          <label ng-show="!store.quantityOn">Quantity: <br>
+            <input
+            type="number"
+            name="quantity"
+            ng-model="store.quantity"
+            class="form-control"></label>
+            <button
+            ng-click="store.editQuantity()"
+            type="button"
+            class="btn btn-primary btn-default">Edit Quantity
+          </button>
+          <button
+          ng-click="store.addQuantity()"
+          type="button"
+          class="btn btn-success btn-default">Add
+        </button>
+      </td>
+    </tr>
+  </table>
+
+</div>
