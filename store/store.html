@@ -1,3 +1,6 @@
+<div class="text-center alert alert-danger" ng-show="store.tooMany" style="position: fixed; top: 0; right: 0; margin: auto">
+  <h5>Not enough available!</h5>
+</div>
 <div class="col-md-2 col-md-offset-4 text-center">
   <label for="searchByName">Search by name: </label>
   <input
@@ -6,13 +9,13 @@
   name="searchByName"
   ng-model="searchByName"
   placeholder="tea"
-  class="form-control">
+  class="form-control input-sm">
 </div>
 <div class="col-md-2 text-center">
   <label for="searchByCategory text-center">Search by category: </label>
-  <select id="searchByCategory" name="searchByCategory" class="form-control">
-    <option disabled>Categories</option>
-    <option ng-repeat="category in categoriesList">{{store.category}}</option>
+  <select id="orderByCategory" name="orderByCategory" ng-model="store.orderByCategory" class="form-control input-sm">
+    <option value="" selected="selected">Categories</option>
+    <option ng-repeat="category in store.categories" value="{{category}}">{{category}}</option>
   </select>
 </div>
 <div class="col-md-12">
@@ -29,29 +32,32 @@
       <th>
       </th>
       <th>
-
       </th>
       <th class="pull-right">
-        Subtotal: {{store.subtotal}}
+        Subtotal: {{store.cartSubtotal/100 | currency}}
       </th>
-      <th>
-        <a type="button" class="btn btn-warning" href="/cart"><span class="glyphicon glyphicon-shopping-cart"></span>
-          Cart: {{total || 'total'}}
+      <th ng-model="store.cartQuantity">
+        <a type="button" class="btn btn-warning" href="/cart">
+          <span class="glyphicon glyphicon-shopping-cart"></span>
+          Cart: {{store.cartQuantity || 'total'}}
         </a>
       </th>
     </tr>
-    <tr ng-repeat="item in store.items">
+    <tr ng-repeat="item in store.items | filter: store.filterOut">
       <td>
         <div class="pull-left">
-          <img src="{{item.imageUrl}}" alt="{{item.name}}" />
+          <img ng-src="{{item.imageUrl}}" alt="{{item.name}}" />
         </div>
       </td>
       <td>
         <div class="pull-left clearfix">
           <ul>
-            <li ng-repeat="(k, v) in item" ng-show="k != 'imageUrl'">
-              <span>{{k}}: </span>
-              <span ng-show="k != 'categories'">{{v}}</span>
+            <li
+              ng-repeat="(k, v) in item"
+              ng-show="k != 'imageUrl' && k != '__v' && k != '_id'">
+              <span>{{k | uppercase}}: </span>
+              <span ng-show="k == 'price'">{{v/100 | currency}}</span>
+              <span ng-show="k != 'categories' && k != 'price'">{{v}}</span>
               <ul ng-show="k == 'categories'">
                 <li ng-repeat="category in item.categories">
                   {{category}}
@@ -66,27 +72,17 @@
       <td>
       </td>
 
-      <!-- ng-if to show a form on store.editQuantity() boolean = true -->
       <td class="pull-right">
-        <label ng-show="store.quantityOn">Quantity: <br>
-          <input
-          type="number"
-          ng-model="store.quantity"
-          class="form-control"
-          readonly="readonly"></label>
-          <label ng-show="!store.quantityOn">Quantity: <br>
+          <label>Quantity: <br>
             <input
             type="number"
             name="quantity"
-            ng-model="store.quantity"
+            ng-model="item.quantityToAdd"
+            min="1"
+            max="{{item.quantityInStock}}"
             class="form-control"></label>
-            <button
-            ng-click="store.editQuantity()"
-            type="button"
-            class="btn btn-primary btn-default">Edit Quantity
-          </button>
           <button
-          ng-click="store.addQuantity()"
+          ng-click="store.addQuantity($index)"
           type="button"
           class="btn btn-success btn-default">Add
         </button>
