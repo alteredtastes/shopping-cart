@@ -42,8 +42,7 @@ StoreController.$inject = ['$timeout', 'InventoryService'];
     }
 
     vm.addQuantity = function(item) {
-      if((item.quantityInCart +
-        item.quantityToAdd) > item.quantityInStock){
+      if((item.quantityInCart + item.quantityToAdd) > item.quantityInStock){
           vm.tooMany = true;
           $timeout(function(){
             vm.tooMany = false}, 3000);
