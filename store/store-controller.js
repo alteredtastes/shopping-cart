@@ -41,18 +41,18 @@ StoreController.$inject = ['$timeout', 'InventoryService'];
       }
     }
 
-    vm.addQuantity = function(index) {
-      if((vm.items[index].quantityInCart +
-        vm.items[index].quantityToAdd) > vm.items[index].quantityInStock){
+    vm.addQuantity = function(item) {
+      if((item.quantityInCart +
+        item.quantityToAdd) > item.quantityInStock){
           vm.tooMany = true;
           $timeout(function(){
             vm.tooMany = false}, 3000);
           return;
         }
-      vm.items[index].quantityInCart += vm.items[index].quantityToAdd;
-      vm.cartQuantity += vm.items[index].quantityToAdd;
-      vm.items[index].quantityToAdd = 1;
-      vm.cartSubtotal += vm.items[index].price * vm.items[index].quantityInCart;
+      item.quantityInCart += item.quantityToAdd;
+      vm.cartSubtotal += (item.price * item.quantityToAdd);
+      vm.cartQuantity += item.quantityToAdd;
+      item.quantityToAdd = 1;
     }
 
     vm.editQuantity = function (index) {

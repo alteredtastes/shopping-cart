@@ -73,18 +73,18 @@
       </td>
 
       <td class="pull-right">
-          <label>Quantity: <br>
-            <input
-            type="number"
-            name="quantity"
-            ng-model="item.quantityToAdd"
-            min="1"
-            max="{{item.quantityInStock}}"
-            class="form-control"></label>
-          <button
-          ng-click="store.addQuantity($index)"
-          type="button"
-          class="btn btn-success btn-default">Add
+        <label>Quantity: <br>
+          <input
+          type="number"
+          name="quantity"
+          ng-model="item.quantityToAdd"
+          min="1"
+          max="{{item.quantityInStock}}"
+          class="form-control"></label>
+        <button
+        ng-click="store.addQuantity(item)"
+        type="button"
+        class="btn btn-success btn-default">Add
         </button>
       </td>
     </tr>
