@@ -1,0 +1,91 @@
+<div class="text-center alert alert-danger" ng-show="store.tooMany" style="position: fixed; top: 0; right: 0; margin: auto">
+  <h5>Not enough available!</h5>
+</div>
+<div class="col-md-2 col-md-offset-4 text-center">
+  <label for="searchByName">Search by name: </label>
+  <input
+  type="text"
+  id="searchByName"
+  name="searchByName"
+  ng-model="searchByName"
+  placeholder="tea"
+  class="form-control input-sm">
+</div>
+<div class="col-md-2 text-center">
+  <label for="searchByCategory text-center">Search by category: </label>
+  <select id="orderByCategory" name="orderByCategory" ng-model="store.orderByCategory" class="form-control input-sm">
+    <option value="" selected="selected">Categories</option>
+    <option ng-repeat="category in store.categories" value="{{category}}">{{category}}</option>
+  </select>
+</div>
+<div class="col-md-12">
+<table class="table table-condensed borderless">
+  <tr>
+    <th>
+      Teas
+    </th>
+    <th>
+      Info
+    </th>
+    <th>
+    </th>
+    <th>
+    </th>
+    <th>
+    </th>
+    <th class="pull-right">
+      Subtotal: {{cart.cartSubtotal/100 | currency}}
+    </th>
+    <th ng-model="cart.cartQuantity">
+      <a type="button" class="btn btn-warning" href="/cart">
+        <span class="glyphicon glyphicon-shopping-cart"></span>
+        Cart: {{cart.cartQuantity || 'total'}}
+      </a>
+    </th>
+  </tr>
+  <tr ng-repeat="item in cart.items | filter: cart.filterOut">
+    <td>
+      <div class="pull-left">
+        <img ng-src="{{item.imageUrl}}" alt="{{item.name}}" />
+      </div>
+    </td>
+    <td>
+      <div class="pull-left clearfix">
+        <ul>
+          <li
+            ng-repeat="(k, v) in item"
+            ng-show="k != 'imageUrl' && k != '__v' && k != '_id'">
+            <span>{{k | uppercase}}: </span>
+            <span ng-show="k == 'price'">{{v/100 | currency}}</span>
+            <span ng-show="k != 'categories' && k != 'price'">{{v}}</span>
+            <ul ng-show="k == 'categories'">
+              <li ng-repeat="category in item.categories">
+                {{category}}
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </td>
+    <td>
+    </td>
+    <td>
+    </td>
+
+    <td class="pull-right">
+      <label>Quantity: <br>
+        <input
+        type="number"
+        name="quantity"
+        ng-model="item.quantityToAdd"
+        min="1"
+        max="{{item.quantityInStock}}"
+        class="form-control"></label>
+      <button
+      ng-click="cart.addQuantity(item)"
+      type="button"
+      class="btn btn-success btn-default">Add
+      </button>
+    </td>
+  </tr>
+</table>

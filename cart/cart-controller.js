@@ -1,5 +1,5 @@
 (function () {
-  'use strict'
+  'use strict';
 
 angular
   .module('shoppingApp')
@@ -7,6 +7,5 @@ angular
 
 function CartController () {
     var vm = this;
-    vm.view = 'cart!';
   }
 })();
